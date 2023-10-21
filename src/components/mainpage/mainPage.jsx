@@ -47,7 +47,7 @@ function MainPage({setAllArticles, user, ...props }) {
         if(r.status === 200){
             const r2 = await getAllArticles()
             setAllArticles(r2.data.data)
-            const link = "/articles/" + (cyrillicToTranslit().transform((sendTitle), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '');
+            const link = "/articles/" + (cyrillicToTranslit().transform((sendTitle), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + data.replaceAll('/', '.');
             window.location.assign(link);
         }
     }
