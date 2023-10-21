@@ -43,7 +43,7 @@ function App() {
                 <div className="app-wrapper">
                     <Routes>
                         {allArticles.map(a =>
-                            <Route key={a.description} path={("/articles/" + cyrillicToTranslit().transform((a.title), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '')} element={<Article article={a}/>} />
+                            <Route key={a.description} path={"/articles/" + (cyrillicToTranslit().transform((a.title), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '')} element={<Article article={a}/>} />
                         )}
                     </Routes>
                     {user.name ?
