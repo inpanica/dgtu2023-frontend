@@ -2,18 +2,25 @@ import '../../App.css'
 import Feild from '../feild/Feild.jsx'
 import Button from '../button/Button.jsx'
 import './mainPage.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 function MainPage() {
 
     const [textAreas, setTextAreas] = useState([{ 'id': 'feild' + 1, 'text': 'Заголовок', 'fontSize': 'title' }]);
     const [selectedTextArea, setSelectedTextArea] = useState(null);
+    const [title, setTitle] = useState('')
+    const [articleText, setArticleText] = useState('')
 
     const fontSizes = {
         'title': 'заголовок',
         'subtitle': 'подзаголовок',
         'main': 'текст'
     }
+
+    useEffect(() => {
+        setTitle(textAreas[0].text);
+        console.log(title);
+    }, [textAreas[0]])
 
     const handleBlur = (id) => {
         setSelectedTextArea(id);
@@ -31,7 +38,6 @@ function MainPage() {
     const setMainText = (id, text) => {
         setTextAreas(textAreas.map(obj => {
             if (obj.id === id) {
-                console.log(id);
                 return { ...obj, ['text']: text };
             } else {
                 return obj;
@@ -40,6 +46,11 @@ function MainPage() {
     }
 
     const createTag = (tag, id) => {
+        let result = ''
+        if(tag === 'a'){
+            result = prompt('Введите ссылку', '');
+            result = ' href="' + result + '"'
+        }
         const control = document.getElementById(id);
         const start = control.selectionStart;
         const end = control.selectionEnd;
@@ -48,8 +59,7 @@ function MainPage() {
             var text = control.value
             setTextAreas(textAreas.map(obj => {
                 if (obj.id === id) {
-                    console.log(id);
-                    return { ...obj, ['text']: text.substring(0, start) + `<${tag}>` + text.substring(start, end) + `</${tag}>` + text.substring(end) };
+                    return { ...obj, ['text']: text.substring(0, start) + `<${tag}${result || ''}>` + text.substring(start, end) + `</${tag}>` + text.substring(end) };
                 } else {
                     return obj;
                 }
@@ -69,7 +79,7 @@ function MainPage() {
                         <Button onClick={() => { createTag('b', selectedTextArea) }}><b>Ж</b></Button>
                         <Button onClick={() => { createTag('u', selectedTextArea) }}><u>П</u></Button>
                         <Button onClick={() => { createTag('strike', selectedTextArea) }}><strike>О</strike></Button>
-                        <Button onClick={() => { createTag('blockquote', selectedTextArea) }}><blockquote>Ц</blockquote></Button>
+                        <Button onClick={() => { createTag('a', selectedTextArea) }}><p>C</p></Button>
                     </div>
                 </div>
             </div>
@@ -82,4 +92,13 @@ function MainPage() {
                 <div className="append-panel-block">
                     <div className="ctn append-panel-content">
                         <Button onClick={() => { createTextArea('subtitle') }}>Добавить подзаголовок</Button>
-                        <Button onClick={() => { createTextArea
+                        <Button onClick={() => { createTextArea('main') }}>Добавить текст</Button>
+                        <Button>Добавить изображение</Button>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default MainPage

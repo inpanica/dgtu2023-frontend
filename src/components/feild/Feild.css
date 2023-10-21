@@ -55,7 +55,7 @@
 }
 
 .light-theme .result-feild *{
-    color: var(--light-theme-main-color);
+    color: var(--light-theme-main-color) !important;
 }
 
 .dark-theme .result-feild *{
@@ -72,4 +72,8 @@
     .result-feild{
         margin-top: 30px;
     }
+}
+
+.result-feild a{
+    color: var(--light-theme-main-color) !important;
 }

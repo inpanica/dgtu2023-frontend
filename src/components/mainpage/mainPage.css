@@ -84,4 +84,14 @@
         top: 50px;
     }
     
+    .font-panel-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 5px;
+    }
+
+    .font-panel-content * {
+        margin: 0;
+    }
 }
