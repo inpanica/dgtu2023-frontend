@@ -41,7 +41,7 @@ a {
 body{
     height: 100vh;
     max-width: 100vw;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 /*-------------------------Root-----------------*/
