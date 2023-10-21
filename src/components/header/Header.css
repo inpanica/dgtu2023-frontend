@@ -1,0 +1,31 @@
+@import url(../../App.css);
+
+.header {
+    padding: 25px;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 100px;
+    transition: .15s ease-out all;
+    position: fixed;
+    width: 100%;
+    z-index: 20;
+}
+
+.header-ctn {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+@media screen and (max-width: 550px){
+    .header{
+        padding: 15px;
+        height: 50px;
+    }
+}
+
+.logo{
+    text-decoration: none;
+}

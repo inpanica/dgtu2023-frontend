@@ -1,0 +1,87 @@
+@import url('../../App.css');
+
+.article-zone{
+    padding: 250px 0;
+}
+
+.append-panel{
+    width: 100vw;
+    position: fixed;
+    bottom: 0px;
+}
+
+.append-panel-content{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    filter: drop-shadow(0px 5px 10px rgba(1, 2, 24, 0.20));
+}
+
+.append-panel-block{
+    z-index: 10;
+    filter: drop-shadow(0px 5px 10px rgba(1, 2, 24, 0.20));
+    width: 100%;
+    border-radius: 20px 20px 0px 0px;
+}
+
+.light-theme .append-panel-block{
+    background-color: var(--light-theme-background-color);
+}
+
+.dark-theme .append-panel-block{
+    background-color: var(--dark-theme-background-color);
+}
+
+.font-panel{
+    top: 75px;
+    width: 100vw;
+    position: fixed;
+}
+
+.font-panel-content > *{
+    margin-right: 20px;
+}
+
+.font-panel-content{
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+    filter: drop-shadow(0px 5px 10px rgba(1, 2, 24, 0.20));
+    border-radius: 20px;
+}
+
+.font-panel-block{
+    display: flex;
+    align-items: center;
+    border-radius: 0px 0px 20px 20px;
+    height: 75px;
+}
+
+@media screen and (max-width: 750px){
+    .append-panel-content{
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .append-panel-content .button-text{
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 550px){
+    .append-panel-content{
+        flex-direction: column;
+        gap: 0;
+        height: 250px;
+    }
+
+    .append-panel-content .button-wrapper{
+        width: 100%;
+    }
+    
+    .font-panel{
+        top: 50px;
+    }
+    
+}

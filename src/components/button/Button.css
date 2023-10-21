@@ -1,0 +1,78 @@
+@import url(../../App.css);
+
+.button {
+    position: relative;
+    width: 100%;
+    padding: 10px 20px;
+    background-color: var(--light-theme-main-color);
+    cursor: pointer;
+    border: 0;
+    border-radius: 5px;
+    filter: drop-shadow(0px 5px 10px rgba(1, 2, 24, 0.20));
+    z-index: 30;
+    transition: .15s ease-out all;
+    transform: translateY(-1px);
+}
+
+.button:hover {
+    transform: translateY(-3px);
+}
+
+.button:active {
+    transform: translateY(5px);
+}
+
+.button-decorate {
+    position: relative;
+    z-index: 20;
+    display: block;
+    height: 20px;
+    transform: translateY(-15px);
+    width: 100%;
+    background-color: var(--light-theme-main-color);
+    border-radius: 5px;
+}
+
+.light-theme .block .button-decorate {
+    background-color: #CDD0F9;
+}
+
+.button-wrapper {
+    margin-top: 20px;
+    width: min-content;
+}
+
+.button-text {
+    font-family: montserrat, sans-serif;
+    color: var(--light-theme-background-color);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+@media screen and (max-width: 550px) {
+    .button-text {
+        font-size: 16px;
+    }
+}
+
+.light-theme .block .button {
+    background-color: var(--light-theme-background-color);
+}
+
+.light-theme .block .button .button-text {
+    color: var(--light-theme-main-color);
+}
+
+.light-theme .button *{
+    color: var(--light-theme-background-color);
+}
+
+.light-theme .block .button * {
+    background-color: var(--light-theme-background-color);
+}
+
+.light-theme .block .button .button-text * {
+    color: var(--light-theme-main-color);
+}

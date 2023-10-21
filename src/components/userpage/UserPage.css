@@ -1,0 +1,102 @@
+@import url(../../App.css);
+
+.user-photo{
+    height: 100%;
+    width: 100%;
+}
+
+.user-info{
+    height: max-content;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.user-info-text-part{
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.image-input{
+    margin-left: 0;
+    position: relative;
+    overflow: hidden;
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.image-input-plus{
+    z-index: 100;
+    position: absolute;
+    height: 80px;
+    width: 80px;
+    border-radius: 100px;
+    transform: translateY(200px) rotateZ(360deg);
+    transition: .2s ease-out all;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.light-theme .image-input-plus{
+    background-color: var(--light-theme-main-color);
+}
+
+.dark-theme .image-input-plus{
+    background-color: var(--dark-theme-main-color);
+}
+
+.image-input:hover .image-input-plus{
+    transform: translateY(0px) rotateZ(0deg);
+}
+
+.image-input-plus-image{
+    width: 40px;
+    height: 40px;
+}
+
+@media screen and (max-width: 750px){
+    .user-info{
+        align-items: center;
+    }
+    
+    .image-input{
+        width: 100px;
+        height: 100px;
+        display: flex;
+    }
+
+    .user-info-text-part{
+        padding: 10px;
+    }
+}
+
+.username-field{
+    cursor: pointer;
+}
+
+.username-field-input{
+    padding: 5px 10px;
+    outline: none;
+    font-family: montserrat, sans-serif;
+    border: 0;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.light-theme .username-field-input{
+    background-color: var(--light-theme-background-color);
+    color: var(--light-theme-main-color) !important;
+}
+
+.dark-theme .username-field-input{
+    background-color: var(--dark-theme-background-color);
+    color: var(--light-theme-background-color) !important;
+}
+
