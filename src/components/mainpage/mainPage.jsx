@@ -40,16 +40,22 @@ function MainPage({ setAllArticles, user, ...props }) {
         const data = new Intl.DateTimeFormat('en-Us').format(date.now);
         const sendTitle = textAreas[0].text
         const sendText = (textAreas.map(area => {
-            return area.fontSize === 'title' ? '' : `<${area.fontSize}>` + area.text + `</${area.fontSize}>`
+            if( area.fontSize !== 'img'){
+                return area.fontSize === 'title' ? '' : `<${area.fontSize}>` + area.text + `</${area.fontSize}>`
+            }
+            else{
+                return `<img src="${area.text}"/>`
+            }
         }).join(''));
         const doc = { 'title': sendTitle, 'description': sendText, 'user_name': user.name, 'date': data.replaceAll('/', '.'), 'theme': selectedTheme, 'file_name': '' };
-        const r = await (sendDocs(doc));
-        if (r.status === 200) {
-            const r2 = await getAllArticles()
-            setAllArticles(r2.data.data)
-            const link = "/articles/" + (cyrillicToTranslit().transform((sendTitle), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + data.replaceAll('.', '-').replaceAll('/', '-');
-            window.location.assign(link);
-        }
+        console.log(sendText);
+        // const r = await (sendDocs(doc));
+        // if (r.status === 200) {
+        //     const r2 = await getAllArticles()
+        //     setAllArticles(r2.data.data)
+        //     const link = "/articles/" + (cyrillicToTranslit().transform((sendTitle), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + data.replaceAll('.', '-').replaceAll('/', '-');
+        //     window.location.assign(link);
+        // }
     }
 
     const handleBlur = (id) => {
@@ -73,6 +79,10 @@ function MainPage({ setAllArticles, user, ...props }) {
                 return obj;
             }
         }));
+    }
+
+    const createImg = () => {
+        createTextArea('img');
     }
 
     const createTag = (tag, id) => {

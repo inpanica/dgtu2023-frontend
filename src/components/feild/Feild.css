@@ -158,3 +158,14 @@
     background-color: #C45633 !important;
     color: #fff !important;
 }
+
+.feild-img{
+    max-height: 500px;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.feild-img-wrapper{
+    width: 100%;
+}
