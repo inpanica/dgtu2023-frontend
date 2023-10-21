@@ -35,15 +35,40 @@ export const authorization = async (email, password) => {
 }
 
 export const getUser = async () => {
-    const response = await axios.get(
-        config.url + '/users/me', {
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('access')}`,
+    try {
+        const response = await axios.get(
+            config.url + '/users/me', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('access')}`,
+                'Content-Type': 'application/json'
+            },
+        })
+        return response
+    }
+    catch {
+        localStorage.removeItem('access')
+    }
+}
+
+export const sendDocs = async (article) => {
+    const response = await axios.post(
+        config.url + '/articles/add_article',
+        article,
+        {headers: {
             'Content-Type': 'application/json'
         },
     })
     return response
 }
 
+export const getAllArticles = async () => {
+    const response = await axios.get(
+        config.url + '/articles/all', {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    return response
+}
 
 export default registration

@@ -27,11 +27,13 @@ function BurgerMenu({ darkTheme, setDarkTheme, user, setUser, ...props }) {
                     <>
                         <Link to='/user' className="burger-menu-link">Личный кабинет</Link>
                         <Link to='/' className="burger-menu-link" onClick={logOut}>Выйти</Link>
+                        <Link to='/create' className="burger-menu-link" >Создать статью</Link>
                     </>
                     :
                     <>
                         <Link to='/registration' className="burger-menu-link">Зарегистрироваться</Link>
                         <Link to='/authorization' className="burger-menu-link">Войти</Link>
+                        <Link to='/create' className="burger-menu-link" >Создать статью</Link>
                     </>
                 }
 

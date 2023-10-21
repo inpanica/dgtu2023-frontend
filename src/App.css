@@ -45,7 +45,7 @@ body{
 /*-------------------------Root-----------------*/
 :root {
     --h1-text-size: 32px;
-    --h2-text-size: 30px;
+    --h2-text-size: 28px;
     --h3-text-size: 22px;
     --main-text-size: 16px;
 
@@ -62,6 +62,10 @@ body{
     --dark-theme-main-color: #484851;
     --dark-theme-default-text-color: #E8E9FC;
     --dark-theme-block-text-color: #E8E9FC;
+}
+
+.app-wrapper{
+    padding: 200px 0;
 }
 
 @media screen and (max-width:1000px) {
@@ -109,19 +113,19 @@ body{
 
 .h1-title {
     font-size: var(--h1-text-size);
-    font-weight: 700;
+    font-weight: 800;
     margin-bottom: 20px;
 }
 
 .h2-title {
     font-size: var(--h2-text-size);
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 20px;
 }
 
 .h3-title {
     font-size: var(--h3-text-size);
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .main-text {

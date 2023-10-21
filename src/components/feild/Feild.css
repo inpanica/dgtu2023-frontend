@@ -77,3 +77,47 @@
 .result-feild a{
     color: var(--light-theme-main-color) !important;
 }
+
+/*--------------------------THEME----------------------*/
+
+.block-sky{
+    background-color: #6296FF !important;
+    background-image: url(../../images/cloud.svg);
+    background-size: 15%;
+}
+
+.block-sky .making-article-input{
+    background-color: #163470 !important;
+    color: #fff !important;
+}
+.block-sky .making-article-input *{
+    color: #fff !important;
+}
+
+.block-sea{
+    background-color: #6296FF !important;
+    background-image: url(../../images/wave.svg);
+    background-size: 100%;
+}
+
+.block-sea .making-article-input{
+    background-color: #00359F !important;
+    color: #fff !important;
+}
+.block-sea .making-article-input *{
+    color: #fff !important;
+}
+
+.block-flowers{
+    background-color: #2BBF77 !important;
+    background-image: url(../../images/flower.svg);
+    background-size: 10%;
+}
+
+.block-flowers .making-article-input{
+    background-color: #106D40 !important;
+    color: #fff !important;
+}
+.block-flowers .making-article-input *{
+    color: #fff !important;
+}

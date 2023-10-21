@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './Feild.css'
 import parce from 'react-html-parser'
 
-function Feild({ setMainText, fontSize, focusFun, id, mainText, ...props }) {
+function Feild({ setMainText, fontSize, focusFun, id, mainText, theme, ...props }) {
 
     function handleChange(event) {
         event.target.style.height = 5 + 'px';
@@ -11,7 +11,7 @@ function Feild({ setMainText, fontSize, focusFun, id, mainText, ...props }) {
     }
 
     return (
-        <div className='block'>
+        <div className={['block', 'block-' + theme].join(' ')}>
             <div className="ctn">
                 <textarea placeholder={props.placeholder}
                     spellcheck="false"
