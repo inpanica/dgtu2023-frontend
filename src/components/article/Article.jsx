@@ -9,7 +9,7 @@ function Article({article, ...props}) {
             <div className="article-reader">
                 <div className="article-info">
                     <p className="author main-text">{article.user_name}</p>
-                    <p className="date main-text">{article.date}</p>
+                    <p className="date main-text">{article.date.replaceAll('-', '.')}</p>
                 </div>
                 <div
                     className={['article-visual', 'article-visual-' + article.theme].join(' ')}>

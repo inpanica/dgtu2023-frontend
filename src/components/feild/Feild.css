@@ -74,10 +74,35 @@
     }
 }
 
+.block-feild{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
 .result-feild a{
     color: var(--light-theme-main-color) !important;
 }
 
+.delete-button{
+    background-color: var(--light-theme-background-color) !important;
+}
+
+.delete-button *{
+    color: red !important;
+}
+
+.delete-button ~ .button-decorate{
+    background-color: red !important;
+}
+
+.feild-ctn{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
 /*--------------------------THEME----------------------*/
 
 .block-sky{
@@ -118,6 +143,18 @@
     background-color: #106D40 !important;
     color: #fff !important;
 }
+
 .block-flowers .making-article-input *{
+    color: #fff !important;
+}
+
+.block-fire{
+    background-color: #FFE3C1 !important;
+    background-image: url(../../images/fire.svg);
+    background-size: 10%;
+}
+
+.block-fire .making-article-input{
+    background-color: #C45633 !important;
     color: #fff !important;
 }

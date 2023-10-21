@@ -9,6 +9,7 @@ import './App.css'
 import MainPage from './components/mainpage/mainPage.jsx';
 import { getUser, getAllArticles } from './components/actions';
 import cyrillicToTranslit from 'cyrillic-to-translit-js';
+import { Link } from 'react-router-dom';
 
 function App() {
     const [darkTheme, setDarkTheme] = useState(false);
@@ -43,13 +44,13 @@ function App() {
                 <div className="app-wrapper">
                     <Routes>
                         {allArticles.map(a =>
-                            <Route key={a.description} path={"/articles/" + (cyrillicToTranslit().transform((a.title), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + a.date.replaceAll('/', '.')} element={<Article article={a}/>} />
+                            <Route key={a.description} path={"/articles/" + (cyrillicToTranslit().transform((a.title), "_")).replaceAll('_', '') + a.date.replaceAll('.', '-').replaceAll('/', '-')} element={<Article article={a} />} />
                         )}
                     </Routes>
                     {user.name ?
                         <Routes>
                             <Route path='/user' element={<UserPage user={user} />} />
-                            <Route path='/create' element={<MainPage user={user} setAllArticles={setAllArticles}/>} />
+                            <Route path='/create' element={<MainPage user={user} setAllArticles={setAllArticles} />} />
                             {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
                         </Routes>
                         :
@@ -59,9 +60,6 @@ function App() {
                             {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
                         </Routes>
                     }
-
-                    <div className="ctn">
-                    </div>
                 </div>
             </div>
         </BrowserRouter>

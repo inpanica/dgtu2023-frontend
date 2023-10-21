@@ -29,11 +29,12 @@
     font-weight: 800;
 }
 
-.article-visual ul{
-    padding-left: 10px;
+.article-visual ul {
+    margin-top: 10px;
+    padding-left: 30px;
 }
 
-.article-visual li{
+.article-visual li {
     margin-bottom: 10px;
     margin-left: 0;
 }
@@ -78,11 +79,21 @@
     background-color: #106D40 !important;
 }
 
-.author{
+.article-visual-fire {
+    background-color: #FFE3C1 !important;
+    background-image: url(../../images/fire.svg);
+    background-size: 10%;
+}
+
+.article-visual-fire>* {
+    background-color: #C45633 !important;
+}
+
+.author {
     font-weight: 700 !important;
     font-size: var(--h2-text-size) !important;
 }
 
-.article-info{
+.article-info {
     margin-bottom: 20px;
 }

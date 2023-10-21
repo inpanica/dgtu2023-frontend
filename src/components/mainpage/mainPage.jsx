@@ -6,7 +6,7 @@ import { sendDocs, getAllArticles } from '../actions'
 import { useEffect, useState } from 'react'
 import cyrillicToTranslit from 'cyrillic-to-translit-js'
 
-function MainPage({setAllArticles, user, ...props }) {
+function MainPage({ setAllArticles, user, ...props }) {
 
     const [textAreas, setTextAreas] = useState([{ 'id': 'feild' + 1, 'text': 'Заголовок', 'fontSize': 'title' }]);
     const [selectedTextArea, setSelectedTextArea] = useState(null);
@@ -19,7 +19,7 @@ function MainPage({setAllArticles, user, ...props }) {
         'main': 'текст'
     }
 
-    const themes = ['sky', 'sea', 'flowers']
+    const themes = ['sky', 'sea', 'flowers', 'fire']
 
     useEffect(() => {
         const deleteEmptys = textAreas.map(area => {
@@ -42,12 +42,12 @@ function MainPage({setAllArticles, user, ...props }) {
         const sendText = (textAreas.map(area => {
             return area.fontSize === 'title' ? '' : `<${area.fontSize}>` + area.text + `</${area.fontSize}>`
         }).join(''));
-        const doc = { 'title': sendTitle, 'description': sendText, 'user_name': user.name, 'date': data.replaceAll('/', '.'), 'theme': selectedTheme, 'file_name':''};
+        const doc = { 'title': sendTitle, 'description': sendText, 'user_name': user.name, 'date': data.replaceAll('/', '.'), 'theme': selectedTheme, 'file_name': '' };
         const r = await (sendDocs(doc));
-        if(r.status === 200){
+        if (r.status === 200) {
             const r2 = await getAllArticles()
             setAllArticles(r2.data.data)
-            const link = "/articles/" + (cyrillicToTranslit().transform((sendTitle), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + data.replaceAll('/', '.');
+            const link = "/articles/" + (cyrillicToTranslit().transform((sendTitle), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + data.replaceAll('.', '-').replaceAll('/', '-');
             window.location.assign(link);
         }
     }
@@ -59,7 +59,7 @@ function MainPage({setAllArticles, user, ...props }) {
     const createTextArea = (fontSize) => {
         setTextAreas([...textAreas,
         {
-            id: (textAreas.length) + 1 + 'feild',
+            id: 'feild' + ((textAreas.length) + 1),
             'text': '',
             'fontSize': fontSize
         }])
@@ -108,7 +108,7 @@ function MainPage({setAllArticles, user, ...props }) {
                         <Button title='Курсив. Помещает контент в тег <i></i>. Отображает текст, помещенный между знаками > и < курсивом. Пример использования: <i>Строка</i>' onClick={() => { createTag('i', selectedTextArea) }}><i>К</i></Button>
                         <Button title='Жирный. Помещает контент в тег <b></b>. Отображает текст, помещенный между знаками > и < жирным шрифтом. Пример использования: <b>Строка</b>' onClick={() => { createTag('b', selectedTextArea) }}><b>Ж</b></Button>
                         <Button title='Подчёркнутый. Помещает контент в тег <u></u>. Отображает текст, помещенный между тображает знаками > и < подчёеркнутым шрифтом. Пример использования: <u>Строка</u>' onClick={() => { createTag('u', selectedTextArea) }}><u>П</u></Button>
-                        <Button title='Маркерованный список. Помещает контент в тег <ul></ul>. Чтобы добавить элементы списка, необходимо поместить теги <li></li> между знаками > и <. Пример использования: <ul><li>Элемент списка</li></ul>'onClick={() => { createTag('ul', selectedTextArea) }}>ul</Button>
+                        <Button title='Маркерованный список. Помещает контент в тег <ul></ul>. Чтобы добавить элементы списка, необходимо поместить теги <li></li> между знаками > и <. Пример использования: <ul><li>Элемент списка</li></ul>' onClick={() => { createTag('ul', selectedTextArea) }}>ul</Button>
                         <Button title='Элемент списка. Помещает контент в тег <li></li>. Отображает текст, помещенный между знаками > и < как элемент списка. Чтобы этот тег работал, необходимо поместить его в тег <ul></ul> между знаками > и < Пример использования: <ul><li>Элемент списка</li></ul>' onClick={() => { createTag('li', selectedTextArea) }}>li</Button>
                         <Button title='Ссылка. Помещает контент в тег <a href="ваша ссылка" ></a>. Отображает текст, помещенный между знаками > и < в виде ссылки на указанный вами адрес. Адрес указывается в кавычках в поле href="". Пример использования: <a href="https://адрес">Ссыылка на адрес</a>' onClick={() => { createTag('a', selectedTextArea) }}>C</Button>
                     </div>
@@ -125,7 +125,17 @@ function MainPage({setAllArticles, user, ...props }) {
                     </div>
                 </div>
                 {textAreas.map((i) =>
-                    <Feild theme={selectedTheme} key={i.id} id={i.id} mainText={i.text} setMainText={setMainText} focusFun={() => { handleBlur(i.id) }} fontSize={i.fontSize} placeholder={'Введите ' + fontSizes[i.fontSize]}></Feild>
+                    <Feild
+                    textAreas={textAreas}
+                    setTextAreas={setTextAreas}
+                    theme={selectedTheme} 
+                    key={i.id} 
+                    id={i.id} 
+                    mainText={i.text} 
+                    setMainText={setMainText} 
+                    focusFun={() => { handleBlur(i.id) }} 
+                    fontSize={i.fontSize} 
+                    placeholder={'Введите ' + fontSizes[i.fontSize]}></Feild>
                 )}
                 <div className="ctn send-button-wrapper">
                     {sendButtonEnabled ? <Button onClick={() => { sendArticle() }}>Отправить</Button> : ''}
@@ -136,7 +146,7 @@ function MainPage({setAllArticles, user, ...props }) {
                     <div className="ctn append-panel-content">
                         <Button onClick={() => { createTextArea('subtitle') }}>Добавить подзаголовок</Button>
                         <Button onClick={() => { createTextArea('main') }}>Добавить текст</Button>
-                        <Button>Добавить изображение</Button>
+                        <Button onClick={() => { createImg() }}>Добавить изображение</Button>
                     </div>
                 </div>
             </div>

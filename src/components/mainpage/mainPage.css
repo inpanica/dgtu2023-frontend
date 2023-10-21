@@ -29,6 +29,7 @@
 }
 
 .font-panel {
+    z-index: 10;
     top: 75px;
     width: 100vw;
     position: fixed;
@@ -145,4 +146,8 @@
 
 .theme-choose-button-flowers {
     background-color: #2BBF77;
+}
+
+.theme-choose-button-fire {
+    background-color: #FF8A00;
 }
