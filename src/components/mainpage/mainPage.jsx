@@ -2,8 +2,9 @@ import '../../App.css'
 import Feild from '../feild/Feild.jsx'
 import Button from '../button/Button.jsx'
 import './mainPage.css'
-import { sendDocs, getAllArticles } from '../actions'
+import { sendDocs, getAllArticles, sendPhotos, getPhotos } from '../actions'
 import { useEffect, useState } from 'react'
+import JSZip from 'jszip'
 import cyrillicToTranslit from 'cyrillic-to-translit-js'
 
 function MainPage({ setAllArticles, user, ...props }) {
@@ -35,28 +36,70 @@ function MainPage({ setAllArticles, user, ...props }) {
         }
     }, [textAreas])
 
+    const createArchive = async (photoFiles) => {
+        const zip = new JSZip();
+        photoFiles.forEach((photo) => {
+            zip.file(photo.name, photo.file);
+        });
+        const content = await zip.generateAsync({ type: 'blob' });
+        return content;
+    };
+
     const sendArticle = async () => {
-        const date = new Date()
-        const data = new Intl.DateTimeFormat('en-Us').format(date.now);
-        const sendTitle = textAreas[0].text
-        const sendText = (textAreas.map(area => {
-            if( area.fontSize !== 'img'){
-                return area.fontSize === 'title' ? '' : `<${area.fontSize}>` + area.text + `</${area.fontSize}>`
-            }
-            else{
-                return `<img src="${area.text}"/>`
-            }
-        }).join(''));
-        const doc = { 'title': sendTitle, 'description': sendText, 'user_name': user.name, 'date': data.replaceAll('/', '.'), 'theme': selectedTheme, 'file_name': '' };
-        console.log(sendText);
-        // const r = await (sendDocs(doc));
-        // if (r.status === 200) {
-        //     const r2 = await getAllArticles()
-        //     setAllArticles(r2.data.data)
-        //     const link = "/articles/" + (cyrillicToTranslit().transform((sendTitle), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + data.replaceAll('.', '-').replaceAll('/', '-');
-        //     window.location.assign(link);
-        // }
-    }
+        const date = new Date();
+        const data = new Intl.DateTimeFormat('en-US').format(date.now);
+        const sendTitle = textAreas[0].text;
+        let files = [];
+        const fileReaders = [];
+
+        const sendText = await Promise.all(
+            textAreas.map(async (area) => {
+                if (area.fontSize !== 'img') {
+                    return area.fontSize === 'title' ? '' : `<${area.fontSize}>` + area.text + `</${area.fontSize}>`;
+                } else {
+                    const fileReader = new FileReader();
+                    const filePromise = new Promise((resolve) => {
+                        fileReader.onload = () => {
+                            resolve(fileReader.result);
+                        };
+                    });
+                    fileReader.readAsDataURL(document.getElementById(area['id']).files[0]);
+                    fileReaders.push({ 'filePromise': filePromise, name: area.text });
+                    return `<img src="${area.text}"/>`;
+                }
+            })
+        );
+
+        await Promise.all(fileReaders);
+
+        // fileReaders.forEach((result) => {
+
+        //     files.push({ name: textAreas[index], file: result });
+        // });
+        fileReaders.map((f) => {
+            files.push({ name: f.name, file: f.result });
+        })
+
+        const archive = await createArchive(files)
+        const doc = { 'title': sendTitle, 'description': sendText.join(' '), 'user_name': user.name, 'date': data.replaceAll('/', '.'), 'theme': selectedTheme, 'file_name': '' };
+        const r = await (sendDocs(doc));
+        let photoStatus = rPhoto.status
+        if (files) {
+            const rPhoto = await (sendPhotos(archive));
+            console.log(rPhoto);
+            photoStatus = rPhoto.status
+        }
+        else {
+            photoStatus = 200;
+        }
+        if (r.status === 200 && photoStatus === 200) {
+            const r2 = await getAllArticles()
+            setAllArticles(r2.data.data)
+            const rPhoto2 = await getPhotos(r.config.data.title);
+            const link = "/articles/" + (cyrillicToTranslit().transform((sendTitle), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + data.replaceAll('.', '-').replaceAll('/', '-');
+            window.location.assign(link);
+        }
+    };
 
     const handleBlur = (id) => {
         setSelectedTextArea(id);
@@ -136,16 +179,16 @@ function MainPage({ setAllArticles, user, ...props }) {
                 </div>
                 {textAreas.map((i) =>
                     <Feild
-                    textAreas={textAreas}
-                    setTextAreas={setTextAreas}
-                    theme={selectedTheme} 
-                    key={i.id} 
-                    id={i.id} 
-                    mainText={i.text} 
-                    setMainText={setMainText} 
-                    focusFun={() => { handleBlur(i.id) }} 
-                    fontSize={i.fontSize} 
-                    placeholder={'Введите ' + fontSizes[i.fontSize]}></Feild>
+                        textAreas={textAreas}
+                        setTextAreas={setTextAreas}
+                        theme={selectedTheme}
+                        key={i.id}
+                        id={i.id}
+                        mainText={i.text}
+                        setMainText={setMainText}
+                        focusFun={() => { handleBlur(i.id) }}
+                        fontSize={i.fontSize}
+                        placeholder={'Введите ' + fontSizes[i.fontSize]}></Feild>
                 )}
                 <div className="ctn send-button-wrapper">
                     {sendButtonEnabled ? <Button onClick={() => { sendArticle() }}>Отправить</Button> : ''}

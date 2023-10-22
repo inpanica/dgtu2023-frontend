@@ -49,15 +49,17 @@ function App() {
                     </Routes>
                     {user.name ?
                         <Routes>
-                            <Route path='/user' element={<UserPage user={user} />} />
+                            <Route path='/user' exact element={<UserPage user={user} />} />
                             <Route path='/create' element={<MainPage user={user} setAllArticles={setAllArticles} />} />
-                            {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
+                            <Route path="/registration" element={<Navigate replace to="/user" />} />
+                            <Route path="/authorisation" element={<Navigate replace to="/user" />} />
                         </Routes>
                         :
                         <Routes>
                             <Route path='/registration' element={<Registration setUser={setUser} />} />
                             <Route path='/authorization' element={<Authorization />} />
-                            {/* <Route path="/*" element={<Navigate replace to="/" />} /> */}
+                            <Route path='/create' element={<MainPage />} />
+                            {/* <Route path="/create" element={<Navigate replace to="/registration" />} /> */}
                         </Routes>
                     }
                 </div>

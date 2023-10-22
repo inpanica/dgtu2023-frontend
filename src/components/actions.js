@@ -61,6 +61,7 @@ export const sendDocs = async (article) => {
     return response
 }
 
+
 export const getAllArticles = async () => {
     const response = await axios.get(
         config.url + '/articles/all', {
@@ -68,6 +69,25 @@ export const getAllArticles = async () => {
             'Content-Type': 'application/json'
         },
     })
+    return response
+}
+
+export const sendPhotos = async (photos) => {
+    const response = await axios.post(
+        config.url + '/articles/add_photo',
+        {'file': photos},
+        {headers:{
+            'Content-Type': 'multipart/form-data',
+        }}
+    )
+    return response
+}
+
+export const getPhotos = async (photos) => {
+    const response = await axios.post(
+        config.url + '/articles/add_photo',
+        {'file': photos}
+    )
     return response
 }
 

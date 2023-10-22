@@ -15,7 +15,6 @@ function Feild({ textAreas, setTextAreas, setMainText, fontSize, focusFun, id, m
 
     const deleteFun = () => {
         setTextAreas(textAreas.filter(area => area.id !== id));
-        console.log(id);
     }
 
     const uploadImg = (event) => {
@@ -24,7 +23,7 @@ function Feild({ textAreas, setTextAreas, setMainText, fontSize, focusFun, id, m
             setPhotoFile(fileReader.result)
         }
         fileReader.readAsDataURL(event.target.files[0]);
-        setMainText(id, './src/' + (event.target.files[0].name));
+        setMainText(id, (event.target.files[0].name));
     }
 
     useEffect(() => {
