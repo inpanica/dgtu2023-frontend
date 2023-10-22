@@ -54,10 +54,11 @@ export const sendDocs = async (article) => {
     const response = await axios.post(
         config.url + '/articles/add_article',
         article,
-        {headers: {
-            'Content-Type': 'application/json'
-        },
-    })
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
     return response
 }
 
@@ -75,20 +76,22 @@ export const getAllArticles = async () => {
 export const sendPhotos = async (photos) => {
     const response = await axios.post(
         config.url + '/articles/add_photo',
-        {'file': photos},
-        {headers:{
-            'Content-Type': 'multipart/form-data',
-        }}
+        { 'file': photos },
+        {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        }
     )
     return response
 }
 
-export const getPhotos = async (photos) => {
-    const response = await axios.post(
-        config.url + '/articles/add_photo',
-        {'file': photos}
-    )
+export const getPhotos = async (title) => {
+    const response = await axios.get(
+        config.url + `/articles/get_photo?title=${title}`, {
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
     return response
 }
-
-export default registration

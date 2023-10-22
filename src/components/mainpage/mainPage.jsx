@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react'
 import JSZip from 'jszip'
 import cyrillicToTranslit from 'cyrillic-to-translit-js'
 
-function MainPage({ setAllArticles, user, ...props }) {
+function MainPage({ setAllArticles, user, setPhotos, ...props }) {
 
     const [textAreas, setTextAreas] = useState([{ 'id': 'feild' + 1, 'text': 'Заголовок', 'fontSize': 'title' }]);
     const [selectedTextArea, setSelectedTextArea] = useState(null);
@@ -36,13 +36,14 @@ function MainPage({ setAllArticles, user, ...props }) {
         }
     }, [textAreas])
 
-    const createArchive = async (photoFiles) => {
+    const createArchive = async (photoFiles, archiveName) => {
         const zip = new JSZip();
         photoFiles.forEach((photo) => {
             zip.file(photo.name, photo.file);
         });
         const content = await zip.generateAsync({ type: 'blob' });
-        return content;
+        const archiveFileName = `${archiveName}.zip`;
+        return new File([content], archiveFileName, { type: 'application/zip' });
     };
 
     const sendArticle = async () => {
@@ -71,31 +72,27 @@ function MainPage({ setAllArticles, user, ...props }) {
         );
 
         await Promise.all(fileReaders);
-
-        // fileReaders.forEach((result) => {
-
-        //     files.push({ name: textAreas[index], file: result });
-        // });
         fileReaders.map((f) => {
             files.push({ name: f.name, file: f.result });
         })
 
-        const archive = await createArchive(files)
-        const doc = { 'title': sendTitle, 'description': sendText.join(' '), 'user_name': user.name, 'date': data.replaceAll('/', '.'), 'theme': selectedTheme, 'file_name': '' };
+        const archive = await createArchive(files, cyrillicToTranslit().transform((sendTitle), "_").replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + data.replaceAll('.', '-').replaceAll('/', '-'))
+        const fileName = cyrillicToTranslit().transform((sendTitle), "_").replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + data.replaceAll('.', '-').replaceAll('/', '-') + '.zip'
+        const doc = { 'title': sendTitle, 
+        'description': sendText.join(' '), 
+        'user_name': user.name, 
+        'date': data.replaceAll('/', '.'), 
+        'theme': selectedTheme, 
+        'file_name': fileName};
         const r = await (sendDocs(doc));
-        let photoStatus = rPhoto.status
         if (files) {
             const rPhoto = await (sendPhotos(archive));
-            console.log(rPhoto);
-            photoStatus = rPhoto.status
         }
-        else {
-            photoStatus = 200;
-        }
-        if (r.status === 200 && photoStatus === 200) {
+        if (r.status === 200) {
             const r2 = await getAllArticles()
             setAllArticles(r2.data.data)
-            const rPhoto2 = await getPhotos(r.config.data.title);
+            // const rPhoto2 = await getPhotos(sendTitle);
+            // console.log(rPhoto2.data);
             const link = "/articles/" + (cyrillicToTranslit().transform((sendTitle), "_")).replaceAll('/', '').replaceAll('<', '').replaceAll('>', '') + data.replaceAll('.', '-').replaceAll('/', '-');
             window.location.assign(link);
         }

@@ -1,8 +1,20 @@
+import { useEffect, useState } from 'react'
 import '../../App.css'
 import './Article.css'
 import parce from 'react-html-parser'
+import { getPhotos } from '../actions'
 
 function Article({article, ...props}) {
+
+    const [zip, setZip] = useState ();
+    
+    useEffect(() => {
+        const fun = async () => {
+            const newZip = await getPhotos(article.title);
+            setZip(newZip.data)
+        }
+        fun()
+    }, [])
 
     return (
         <div className="ctn">

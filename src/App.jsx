@@ -50,7 +50,7 @@ function App() {
                     {user.name ?
                         <Routes>
                             <Route path='/user' exact element={<UserPage user={user} />} />
-                            <Route path='/create' element={<MainPage user={user} setAllArticles={setAllArticles} />} />
+                            <Route path='/create' element={<MainPage user={user} setAllArticles={setAllArticles}/>} />
                             <Route path="/registration" element={<Navigate replace to="/user" />} />
                             <Route path="/authorisation" element={<Navigate replace to="/user" />} />
                         </Routes>
